@@ -1,26 +1,550 @@
 @import "tailwindcss";
 
+/*
+============================================================
+ Theme Variables (Dark-first design)
+============================================================
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background colors */
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  
+  /* Zinc color palette for UI */
+  --zinc-50: #fafafa;
+  --zinc-100: #f4f4f5;
+  --zinc-200: #e4e4e7;
+  --zinc-300: #d4d4d8;
+  --zinc-400: #a1a1aa;
+  --zinc-500: #71717a;
+  --zinc-600: #52525b;
+  --zinc-700: #3f3f46;
+  --zinc-800: #27272a;
+  --zinc-900: #18181b;
+  --zinc-950: #09090b;
+
+  /* Accent color (yellow/gold) */
+  --accent: #facc15;
+  --accent-foreground: #0a0a0a;
+  --accent-hover: #f59e0b;
+
+  /* Status colors */
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+
+  /* Border & Ring */
+  --border: #27272a;
+  --ring: #facc15;
+
+  /* Sidebar */
+  --sidebar-bg: #09090b;
+  --sidebar-border: #27272a;
+
+  /* Editor */
+  --editor-bg: #0a0a0a;
+  --editor-text: #e4e4e7;
+
+  /* Code block */
+  --code-bg: #18181b;
+  --code-text: #d4d4d8;
 }
+
+/* Light mode overrides (when .light class is applied) */
+.light {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  
+  --border: #e4e4e7;
+  --ring: #facc15;
+
+  --sidebar-bg: #fafafa;
+  --sidebar-border: #e4e4e7;
+
+  --editor-bg: #ffffff;
+  --editor-text: #27272a;
+
+  --code-bg: #f4f4f5;
+  --code-text: #3f3f46;
+}
+
+/*
+============================================================
+ Tailwind v4 Theme Tokens
+============================================================
+*/
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/*
+============================================================
+ Base Styles
+============================================================
+*/
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+============================================================
+ Custom Scrollbar Styles
+============================================================
+*/
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--zinc-800);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--zinc-700);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--zinc-800) transparent;
+}
+
+/*
+============================================================
+ Selection Styling
+============================================================
+*/
+
+::selection {
+  background: rgba(250, 204, 21, 0.3);
+  color: inherit;
+}
+
+/*
+============================================================
+ Focus Styles
+============================================================
+*/
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/*
+============================================================
+ Utility Classes
+============================================================
+*/
+
+.bg-background {
+  background: var(--background);
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.border-border {
+  border-color: var(--border);
+}
+
+.ring-ring {
+  --tw-ring-color: var(--ring);
+}
+
+/*
+============================================================
+ Tiptap Editor - Base Styles (for future commits)
+============================================================
+*/
+
+.ProseMirror {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: pre-wrap !important;
+  max-width: 100% !important;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror *:focus {
+  outline: none;
+}
+
+/* Placeholder */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--zinc-600);
+  pointer-events: none;
+  height: 0;
+}
+
+/*
+============================================================
+ Tiptap Editor - Typography
+============================================================
+*/
+
+.ProseMirror p {
+  margin-top: 0.25em !important;
+  margin-bottom: 0.25em !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+.ProseMirror h1 {
+  font-size: 2.25em;
+  font-weight: 700;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+.ProseMirror h2 {
+  font-size: 1.875em;
+  font-weight: 700;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.ProseMirror h3 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.ProseMirror h4 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.ProseMirror h5 {
+  font-size: 1.125em;
+  font-weight: 600;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.ProseMirror h6 {
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/*
+============================================================
+ Tiptap Editor - Lists
+============================================================
+*/
+
+.ProseMirror ul {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  padding-left: 1.5rem !important;
+  margin: 0.25rem 0 !important;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
+  padding-left: 1.5rem !important;
+  margin: 0.25rem 0 !important;
+}
+
+.ProseMirror li {
+  display: list-item !important;
+  margin: 0.125rem 0 !important;
+}
+
+.ProseMirror li p {
+  margin: 0 !important;
+}
+
+.ProseMirror ul > li::marker {
+  color: var(--zinc-500) !important;
+}
+
+.ProseMirror ol > li::marker {
+  color: var(--zinc-500) !important;
+}
+
+/* Nested lists */
+.ProseMirror ul ul,
+.ProseMirror ol ol,
+.ProseMirror ul ol,
+.ProseMirror ol ul {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/*
+============================================================
+ Tiptap Editor - Code
+============================================================
+*/
+
+.ProseMirror code {
+  background: var(--zinc-800);
+  color: var(--zinc-300);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.ProseMirror pre {
+  background: var(--zinc-900);
+  color: var(--zinc-300);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
+
+.ProseMirror pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/*
+============================================================
+ Tiptap Editor - Blockquotes
+============================================================
+*/
+
+.ProseMirror blockquote {
+  border-left: 4px solid var(--zinc-700);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--zinc-400);
+  margin: 1rem 0;
+}
+
+.ProseMirror blockquote p {
+  margin: 0.5em 0 !important;
+}
+
+/*
+============================================================
+ Tiptap Editor - Links
+============================================================
+*/
+
+.ProseMirror a {
+  color: #fbbf24;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ProseMirror a:hover {
+  color: #f59e0b;
+}
+
+/*
+============================================================
+ Tiptap Editor - Horizontal Rule
+============================================================
+*/
+
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid var(--zinc-700);
+  margin: 2em 0;
+}
+
+/*
+============================================================
+ Syntax Highlighting (Code Blocks) - One Dark Pro Style
+============================================================
+*/
+
+.hljs-comment,
+.hljs-quote {
+  color: #7f848e;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #98c379;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+/*
+============================================================
+ Animations
+============================================================
+*/
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+============================================================
+ Print Styles
+============================================================
+*/
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .ProseMirror code {
+    background: #f4f4f5 !important;
+    color: #27272a !important;
+  }
+  
+  .ProseMirror pre {
+    background: #f4f4f5 !important;
+    color: #27272a !important;
+  }
+}
+
+/*
+============================================================
+ Mobile Responsive Adjustments
+============================================================
+*/
+
+@media (max-width: 768px) {
+  .ProseMirror h1 {
+    font-size: 1.875em;
+  }
+  
+  .ProseMirror h2 {
+    font-size: 1.5em;
+  }
+  
+  .ProseMirror h3 {
+    font-size: 1.25em;
+  }
 }
