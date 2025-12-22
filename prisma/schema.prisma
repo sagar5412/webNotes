@@ -18,9 +18,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  // Relations to Note and Folder will be added later
-  // notes         Note[]
-  // folders       Folder[]
+  // Application data relations
+  notes         Note[]
+  folders       Folder[]
 
   // Welcome notes flag
   hasSeenWelcome Boolean @default(false) @map("has_seen_welcome")
@@ -65,4 +65,37 @@ model VerificationToken {
 
   @@id([identifier, token])
   @@map("verification_tokens")
+}
+
+// APPLICATION MODELS
+model Folder {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id")
+
+  notes     Note[]
+
+  @@map("folders")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String?
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  isPinned  Boolean  @default(false) @map("is_pinned")
+  pinnedAt  DateTime? @map("pinned_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id")
+
+  folder    Folder?  @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  folderId  String?  @map("folder_id")
+
+  @@map("notes")
 }
