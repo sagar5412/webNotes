@@ -3,6 +3,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { welcomeNotes } from "@/lib/welcome-notes";
 
 // GET /api/notes - List all notes for current user
 export async function GET(request: NextRequest) {
@@ -16,6 +17,38 @@ export async function GET(request: NextRequest) {
   const folderId = searchParams.get("folderId");
 
   try {
+    // Check if user has seen welcome notes
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { hasSeenWelcome: true },
+    });
+
+    // Only create welcome notes once
+    if (!user?.hasSeenWelcome) {
+      await Promise.all(
+        welcomeNotes.map((note) =>
+          prisma.note.create({
+            data: {
+              title: note.title,
+              content: note.content,
+              userId: userId,
+              folderId: null,
+              isPinned: note.isPinned || false,
+              pinnedAt: note.pinnedAt || null,
+            },
+          })
+        )
+      );
+
+      // Mark as seen - won't create again even if all notes deleted
+      await prisma.user.update({
+        where: { id: userId },
+        data: { hasSeenWelcome: true },
+      });
+
+      console.log("Created welcome notes for new user:", userId);
+    }
+
     const notes = await prisma.note.findMany({
       where: {
         userId: userId,
