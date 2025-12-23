@@ -16,6 +16,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "WebNotes",
   description: "A beautiful note-taking app with Markdown, Math, and more.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
+  },
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
