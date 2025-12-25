@@ -3,25 +3,34 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect } from "react";
+import { Markdown } from "tiptap-markdown";
+import { useEffect, useCallback } from "react";
 
 interface TiptapEditorProps {
   content: string;
   onChange?: (content: string) => void;
+  onMarkdownChange?: (markdown: string) => void;
   editable?: boolean;
   className?: string;
+}
+
+// Type for Tiptap storage with markdown extension
+interface MarkdownStorage {
+  markdown: {
+    getMarkdown: () => string;
+  };
 }
 
 export default function TiptapEditor({
   content,
   onChange,
+  onMarkdownChange,
   editable = true,
   className = "",
 }: TiptapEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // Configure StarterKit options
         heading: {
           levels: [1, 2, 3],
         },
@@ -34,6 +43,16 @@ export default function TiptapEditor({
           keepAttributes: false,
         },
       }),
+      Markdown.configure({
+        html: true,
+        tightLists: true,
+        tightListClass: "tight",
+        bulletListMarker: "-",
+        linkify: true,
+        breaks: true,
+        transformPastedText: true,
+        transformCopiedText: true,
+      }),
     ],
     content: content,
     editable: editable,
@@ -45,6 +64,10 @@ export default function TiptapEditor({
     onUpdate: ({ editor }) => {
       if (onChange) {
         onChange(editor.getHTML());
+      }
+      if (onMarkdownChange) {
+        const storage = editor.storage as unknown as MarkdownStorage;
+        onMarkdownChange(storage.markdown.getMarkdown());
       }
     },
   });
@@ -62,6 +85,15 @@ export default function TiptapEditor({
       editor.setEditable(editable);
     }
   }, [editable, editor]);
+
+  // Get markdown content helper
+  const getMarkdown = useCallback(() => {
+    if (editor) {
+      const storage = editor.storage as unknown as MarkdownStorage;
+      return storage.markdown.getMarkdown();
+    }
+    return "";
+  }, [editor]);
 
   if (!editor) {
     return null;
