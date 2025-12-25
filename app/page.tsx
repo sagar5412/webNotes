@@ -5,11 +5,12 @@ import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import { NoteListSkeleton } from "@/components/NoteListSkeleton";
 import LoadingScreen from "@/components/LoadingScreen";
+import NoteEditor from "@/components/NoteEditor";
 import { toast, Toaster } from "sonner";
 import { useStorage } from "@/hooks/useStorage";
 import type { Note, Folder } from "@/lib/storage/types";
 import { Button } from "@/components/ui/button";
-import { Menu, X, FileText } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export type FolderWithNotes = Omit<Folder, "notes"> & {
@@ -114,8 +115,24 @@ export default function Home() {
     async (id: string) => {
       if (activeNoteId === id) setActiveNoteId(null);
       await storageDeleteNote(id);
+      toast.success("Note deleted");
     },
     [storageDeleteNote, activeNoteId]
+  );
+
+  // Update note handler
+  const handleNoteUpdate = useCallback(
+    async (updatedNote: Note) => {
+      try {
+        await storageUpdateNote(updatedNote.id, {
+          title: updatedNote.title,
+          content: updatedNote.content,
+        });
+      } catch {
+        toast.error("Failed to save note");
+      }
+    },
+    [storageUpdateNote]
   );
 
   // Create folder handler
@@ -281,34 +298,13 @@ export default function Home() {
           )}
         </div>
 
-        {/* Note editor area (placeholder until NoteEditor is built) */}
-        <div className="flex-1 overflow-hidden flex items-center justify-center bg-zinc-950">
-          {activeNote ? (
-            <div className="w-full h-full p-8">
-              <div className="max-w-3xl mx-auto">
-                <h1 className="text-2xl font-bold text-white mb-4">
-                  {activeNote.title || "Untitled"}
-                </h1>
-                <p className="text-zinc-400">
-                  {activeNote.content || "Start writing..."}
-                </p>
-                <p className="text-xs text-zinc-600 mt-8">
-                  Note Editor will be built in Phase 8
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center">
-              <FileText size={48} className="mx-auto mb-4 text-zinc-700" />
-              <h2 className="text-xl font-semibold text-zinc-400 mb-2">
-                Select a note
-              </h2>
-              <p className="text-zinc-500 mb-4">
-                Or create a new one to get started
-              </p>
-              <Button onClick={() => createNote()}>Create Note</Button>
-            </div>
-          )}
+        {/* Note editor */}
+        <div className="flex-1 overflow-hidden">
+          <NoteEditor
+            activeNote={activeNote}
+            onNoteUpdate={handleNoteUpdate}
+            onDeleteNote={deleteNote}
+          />
         </div>
       </div>
     </main>
