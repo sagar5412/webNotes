@@ -4,6 +4,7 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
+import Placeholder from "@tiptap/extension-placeholder";
 import { useEffect, useCallback } from "react";
 
 interface TiptapEditorProps {
@@ -52,6 +53,10 @@ export default function TiptapEditor({
         breaks: true,
         transformPastedText: true,
         transformCopiedText: true,
+      }),
+      Placeholder.configure({
+        placeholder: "Type / for commands, or just start writing...",
+        emptyEditorClass: "is-editor-empty",
       }),
     ],
     content: content,
