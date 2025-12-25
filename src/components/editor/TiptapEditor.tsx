@@ -10,7 +10,8 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
-import { useEffect, useCallback, forwardRef, useImperativeHandle } from "react";
+import { SlashCommandExtension } from "./SlashCommandExtension";
+import { useEffect, forwardRef, useImperativeHandle } from "react";
 
 interface TiptapEditorProps {
   content: string;
@@ -85,6 +86,7 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
         TaskItem.configure({
           nested: true,
         }),
+        SlashCommandExtension,
       ],
       content: content,
       editable: editable,
