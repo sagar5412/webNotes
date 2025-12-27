@@ -11,6 +11,8 @@ import Link from "@tiptap/extension-link";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import { SlashCommandExtension } from "./SlashCommandExtension";
+import { MathInlineExtension } from "./MathInlineExtension";
+import { MathBlockExtension } from "./MathBlockExtension";
 import { useEffect, forwardRef, useImperativeHandle } from "react";
 
 interface TiptapEditorProps {
@@ -87,6 +89,8 @@ const TiptapEditor = forwardRef<TiptapEditorRef, TiptapEditorProps>(
           nested: true,
         }),
         SlashCommandExtension,
+        MathInlineExtension,
+        MathBlockExtension,
       ],
       content: content,
       editable: editable,
