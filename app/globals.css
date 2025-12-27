@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 /*
 ============================================================
@@ -10,7 +11,7 @@
   /* Background colors */
   --background: #0a0a0a;
   --foreground: #fafafa;
-  
+
   /* Zinc color palette for UI */
   --zinc-50: #fafafa;
   --zinc-100: #f4f4f5;
@@ -54,7 +55,7 @@
 .light {
   --background: #ffffff;
   --foreground: #0a0a0a;
-  
+
   --border: #e4e4e7;
   --ring: #facc15;
 
@@ -394,6 +395,47 @@ body {
 
 /*
 ============================================================
+ Tiptap Editor - Math Inline
+============================================================
+*/
+
+.math-inline-wrapper {
+  display: inline;
+  cursor: pointer;
+  padding: 0 2px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.math-inline-wrapper:hover {
+  background-color: rgba(250, 204, 21, 0.1);
+}
+
+.math-inline-wrapper.ProseMirror-selectednode {
+  background-color: rgba(250, 204, 21, 0.2);
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.math-inline-content {
+  display: inline;
+}
+
+.math-inline-content .katex {
+  font-size: 1em;
+}
+
+.math-error {
+  color: #ef4444;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875em;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/*
+============================================================
  Syntax Highlighting (Code Blocks) - One Dark Pro Style
 ============================================================
 */
@@ -517,12 +559,12 @@ body {
     background: white !important;
     color: black !important;
   }
-  
+
   .ProseMirror code {
     background: #f4f4f5 !important;
     color: #27272a !important;
   }
-  
+
   .ProseMirror pre {
     background: #f4f4f5 !important;
     color: #27272a !important;
@@ -539,11 +581,11 @@ body {
   .ProseMirror h1 {
     font-size: 1.875em;
   }
-  
+
   .ProseMirror h2 {
     font-size: 1.5em;
   }
-  
+
   .ProseMirror h3 {
     font-size: 1.25em;
   }
