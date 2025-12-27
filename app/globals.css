@@ -575,6 +575,60 @@ body {
 
 /*
 ============================================================
+ Tiptap Editor - Math Block (Display Equations)
+============================================================
+*/
+
+.math-block-wrapper {
+  display: block;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--zinc-900);
+  border: 1px solid var(--zinc-800);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.math-block-wrapper:hover {
+  border-color: var(--zinc-700);
+  background: var(--zinc-900);
+}
+
+.math-block-wrapper.ProseMirror-selectednode {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2);
+}
+
+.math-block-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
+}
+
+.math-block-content .katex-display {
+  margin: 0;
+}
+
+.math-block-content .katex {
+  font-size: 1.25em;
+}
+
+/* Light mode */
+.light .math-block-wrapper {
+  background: var(--zinc-50);
+  border-color: var(--zinc-200);
+}
+
+.light .math-block-wrapper:hover {
+  background: var(--zinc-100);
+  border-color: var(--zinc-300);
+}
+
+/*
+============================================================
  Syntax Highlighting (Code Blocks) - One Dark Pro Style
 ============================================================
 */
