@@ -627,6 +627,246 @@ body {
   border-color: var(--zinc-300);
 }
 
+/* Math Block Editor (when editing) */
+.math-block-editor {
+  display: block;
+  margin: 1.5rem 0;
+}
+
+.math-block-editor-container {
+  background: var(--zinc-900);
+  border: 1px solid var(--zinc-700);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.math-block-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--zinc-800);
+  border-bottom: 1px solid var(--zinc-700);
+}
+
+.math-block-editor-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--zinc-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.math-block-editor-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.math-block-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.math-block-action-save {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.math-block-action-save:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+.math-block-action-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.math-block-action-cancel {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.math-block-action-cancel:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.math-block-editor-body {
+  display: flex;
+  border-bottom: 1px solid var(--zinc-700);
+}
+
+.math-block-line-numbers {
+  padding: 12px 0;
+  background: var(--zinc-950);
+  border-right: 1px solid var(--zinc-700);
+  min-width: 40px;
+  user-select: none;
+}
+
+.math-block-line-number {
+  padding: 0 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--zinc-600);
+  text-align: right;
+  line-height: 1.6;
+}
+
+.math-block-textarea {
+  flex: 1;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  color: var(--zinc-200);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  min-height: 72px;
+}
+
+.math-block-textarea::placeholder {
+  color: var(--zinc-600);
+}
+
+.math-block-preview {
+  padding: 16px;
+  background: var(--zinc-950);
+}
+
+.math-block-preview-label {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--zinc-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.math-block-preview-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+}
+
+.math-block-preview-content .katex-display {
+  margin: 0;
+}
+
+.math-block-preview-error {
+  color: #ef4444;
+}
+
+.math-block-preview-empty {
+  color: var(--zinc-600);
+  font-size: 0.875rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.math-block-editor-footer {
+  padding: 8px 12px;
+  background: var(--zinc-800);
+  border-top: 1px solid var(--zinc-700);
+  font-size: 0.625rem;
+  color: var(--zinc-500);
+  text-align: center;
+}
+
+.math-block-editor-footer kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  background: var(--zinc-700);
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.625rem;
+}
+
+/* Edit button for view mode */
+.math-block-edit-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--zinc-800);
+  border: 1px solid var(--zinc-600);
+  border-radius: 4px;
+  color: var(--zinc-400);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.math-block-edit-btn:hover {
+  background: var(--zinc-700);
+  color: var(--zinc-200);
+}
+
+/* Make wrapper relative for edit button positioning */
+.math-block-wrapper {
+  position: relative;
+}
+
+/* Light mode for editor */
+.light .math-block-editor-container {
+  background: #ffffff;
+  border-color: var(--zinc-300);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.light .math-block-editor-header {
+  background: var(--zinc-100);
+  border-bottom-color: var(--zinc-200);
+}
+
+.light .math-block-line-numbers {
+  background: var(--zinc-50);
+  border-right-color: var(--zinc-200);
+}
+
+.light .math-block-textarea {
+  color: var(--zinc-800);
+}
+
+.light .math-block-preview {
+  background: var(--zinc-50);
+}
+
+.light .math-block-editor-footer {
+  background: var(--zinc-100);
+  border-top-color: var(--zinc-200);
+}
+
+.light .math-block-editor-footer kbd {
+  background: var(--zinc-200);
+}
+
+.light .math-block-edit-btn {
+  background: var(--zinc-100);
+  border-color: var(--zinc-300);
+  color: var(--zinc-600);
+}
+
+.light .math-block-edit-btn:hover {
+  background: var(--zinc-200);
+  color: var(--zinc-800);
+}
+
 /*
 ============================================================
  Syntax Highlighting (Code Blocks) - One Dark Pro Style
