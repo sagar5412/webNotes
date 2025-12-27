@@ -434,6 +434,145 @@ body {
   border-radius: 2px;
 }
 
+/* Math Inline Editor (when editing) */
+.math-inline-editor {
+  display: inline;
+}
+
+.math-editor-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--zinc-900);
+  border: 1px solid var(--zinc-700);
+  border-radius: 6px;
+  padding: 4px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.math-input {
+  background: transparent;
+  border: none;
+  color: var(--zinc-200);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  min-width: 80px;
+  max-width: 200px;
+  outline: none;
+}
+
+.math-input::placeholder {
+  color: var(--zinc-600);
+}
+
+.math-preview {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 6px;
+  border-left: 1px solid var(--zinc-700);
+  color: var(--zinc-300);
+}
+
+.math-preview-content {
+  font-size: 0.9em;
+}
+
+.math-preview-content.math-preview-error {
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+.math-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+}
+
+.math-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.math-action-save {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.math-action-save:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+.math-action-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.math-action-cancel {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.math-action-cancel:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* Edit button (shown when selected) */
+.math-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  background: var(--zinc-800);
+  border: 1px solid var(--zinc-600);
+  border-radius: 3px;
+  color: var(--zinc-400);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  vertical-align: middle;
+}
+
+.math-edit-btn:hover {
+  background: var(--zinc-700);
+  color: var(--zinc-200);
+}
+
+/* Light mode adjustments */
+.light .math-editor-container {
+  background: #ffffff;
+  border-color: var(--zinc-300);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.light .math-input {
+  color: var(--zinc-800);
+}
+
+.light .math-preview {
+  border-left-color: var(--zinc-300);
+  color: var(--zinc-700);
+}
+
+.light .math-edit-btn {
+  background: var(--zinc-100);
+  border-color: var(--zinc-300);
+  color: var(--zinc-600);
+}
+
+.light .math-edit-btn:hover {
+  background: var(--zinc-200);
+  color: var(--zinc-800);
+}
+
 /*
 ============================================================
  Syntax Highlighting (Code Blocks) - One Dark Pro Style
